@@ -1,0 +1,35 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+-- Entity declaration
+entity JK_FlipFlop is
+ Port ( J : in STD_LOGIC;
+ K : in STD_LOGIC;
+ clk : in STD_LOGIC;
+ reset : in STD_LOGIC;
+ Q : out STD_LOGIC;
+ Qbar : out STD_LOGIC);
+end JK_FlipFlop;
+-- Architecture definition
+architecture Behavioral of JK_FlipFlop is
+ signal temp : STD_LOGIC := '0'; 
+begin
+ process(clk, reset)
+ begin
+ if (reset = '1') then
+ temp <= '0'; 
+ elsif (rising_edge(clk)) then
+ -- JK logic transitions
+ if (J = '0' and K = '0') then
+ temp <= temp; -- No change
+ elsif (J = '0' and K = '1') then
+ temp <= '0'; -- Reset state
+ elsif (J = '1' and K = '0') then
+ temp <= '1'; -- Set state
+ elsif (J = '1' and K = '1') then
+ temp <= not temp; -- Toggle state
+ end if;
+ end if;
+ end process;
+ Q <= temp;
+ Qbar <= not temp;
+end Behavioral;
