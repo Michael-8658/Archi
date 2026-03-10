@@ -1,0 +1,25 @@
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity full_adder is 
+     port(a,b,cin:in std_logic;
+            d,cout:out std_logic);
+end full_adder;
+
+architecture structural of full_adder is 
+component halfadder is 
+     port(x,y:in std_logic;sum,carry:out std_logic);
+end component;
+
+component orgate is
+port(x,y : in std_logic;z:out std_logic);
+end component;
+
+signal s1,s2,s3:std_logic;
+
+begin
+H1:halfadder port map(x=>a,y=>b,sum=>s1,carry=>s3);
+H2:halfadder port map(x=>a,y=>cin,sum=>d ,carry=>s2);
+OR1:orgate port map(x=>s2,y=>s3,z=>cout);
+end structural;
